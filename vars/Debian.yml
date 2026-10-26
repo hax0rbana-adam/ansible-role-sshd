@@ -5,11 +5,33 @@ sshd_package_name:
 
 sshd_service_name: 'ssh'
 
+sshd_client_config_default:
+  Host:
+    - pattern: '*'
+      content:
+        SendEnv:
+          - 'LANG LC_*'
+        HashKnownHosts: 'yes'
+        GSSAPIAuthentication: 'yes'
+
+sshd_server_config_default:
+  KbdInteractiveAuthentication: 'no'
+  UsePAM: 'yes'
+  X11Forwarding: 'yes'
+  PrintMotd: 'no'
+  AcceptEnv:
+    - 'LANG LC_*'
+  Subsystem: 'sftp /usr/lib/openssh/sftp-server'
+
 sshd_daemon_config_file: '/etc/default/ssh'
 
 sshd_client_config_file: '/etc/ssh/ssh_config'
 
 sshd_server_config_file: '/etc/ssh/sshd_config'
+
+sshd_client_dropin_config_dir: '/etc/ssh/ssh_config.d'
+
+sshd_server_dropin_config_dir: '/etc/ssh/sshd_config.d'
 
 sshd_daemon_config_default:
   SSHD_OPTS: ''
